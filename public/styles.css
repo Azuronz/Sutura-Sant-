@@ -453,6 +453,47 @@ main {
   box-shadow: 0 4px 16px rgba(4, 66, 83, 0.045);
 }
 
+.installation-ios {
+  margin: 0.75rem 1rem 0;
+  border-color: var(--primary);
+}
+
+.installation-ios h2 {
+  margin: 0 0 0.4rem;
+  color: var(--title);
+  font-size: 1rem;
+}
+
+.installation-ios > p {
+  margin: 0 0 0.75rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.installation-ios summary {
+  width: fit-content;
+  cursor: pointer;
+  list-style: none;
+}
+
+.installation-ios summary::-webkit-details-marker {
+  display: none;
+}
+
+.installation-ios ol {
+  padding-inline-start: 1.4rem;
+  color: var(--text);
+  font-size: 0.88rem;
+}
+
+.installation-ios li + li {
+  margin-top: 0.45rem;
+}
+
+.installation-ios .field__aide {
+  margin-bottom: 0;
+}
+
 .service {
   display: flex;
   flex-direction: column;

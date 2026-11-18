@@ -4,9 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#E8F4FC">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Sutura Santé">
     <title>Sutura Santé</title>
     <link rel="manifest" href="/manifest.json">
     <link rel="icon" href="/icons/icon-192.png" type="image/png">
+    <link rel="apple-touch-icon" href="/icons/icon-192.png">
     <link rel="stylesheet" href="/styles.css">
     <script type="module" src="/app.js"></script>
   </head>
@@ -23,6 +26,19 @@
 
     <div class="app">
       <p class="bandeau-statut" role="note">Démo : utilisez uniquement des données fictives. Les données de compte et de rendez-vous sont transmises au serveur.</p>
+      <aside id="installation-ios" class="card installation-ios" aria-labelledby="titre-installation-ios" hidden>
+        <h2 id="titre-installation-ios">Installer Sutura Santé sur iPhone ou iPad</h2>
+        <p>Ajoutez l’application à votre écran d’accueil pour la retrouver facilement.</p>
+        <details>
+          <summary class="btn btn--secondaire">Voir les étapes d’installation</summary>
+          <ol>
+            <li>Dans Safari, touchez le bouton <strong>Partager</strong> (le carré avec une flèche).</li>
+            <li>Faites défiler les actions et choisissez <strong>Sur l’écran d’accueil</strong>.</li>
+            <li>Activez <strong>Ouvrir comme app web</strong> si cette option apparaît, puis touchez <strong>Ajouter</strong>.</li>
+          </ol>
+          <p class="field__aide">Si vous utilisez un autre navigateur et ne trouvez pas cette option, ouvrez cette page dans Safari.</p>
+        </details>
+      </aside>
       <main>
         <section id="accueil" class="ecran" aria-labelledby="titre-accueil">
           <div class="hero">

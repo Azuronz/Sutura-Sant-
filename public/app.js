@@ -4,6 +4,7 @@ const formulaires = document.querySelector('#formulaires');
 const session = document.querySelector('#session');
 const bonjour = document.querySelector('#bonjour');
 const annonce = document.querySelector('#annonce');
+const invitationInstallationIos = document.querySelector('#installation-ios');
 const ecrans = [...document.querySelectorAll('.ecran')];
 const informationsListe = document.querySelector('#liste-informations');
 const rechercheInformations = document.querySelector('#recherche-informations');
@@ -83,6 +84,14 @@ function afficherAnnonce(message) {
     annonce.hidden = true;
     annonce.textContent = '';
   }, 6000);
+}
+
+function afficherInvitationInstallationIos() {
+  const estIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent)
+    || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const estInstallee = navigator.standalone === true
+    || window.matchMedia('(display-mode: standalone)').matches;
+  invitationInstallationIos.hidden = !estIOS || estInstallee;
 }
 
 function dateUtc(date) {
@@ -483,6 +492,7 @@ document.querySelector('#planning-suivant').addEventListener('click', () => {
   void chargerPlanningMedecin();
 });
 window.addEventListener('hashchange', afficherEcran);
+afficherInvitationInstallationIos();
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/sw.js').catch(() => {});
