@@ -4,7 +4,9 @@ const formulaires = document.querySelector('#formulaires');
 const session = document.querySelector('#session');
 const bonjour = document.querySelector('#bonjour');
 const annonce = document.querySelector('#annonce');
-const invitationInstallationIos = document.querySelector('#installation-ios');
+const invitationInstallationApp = document.querySelector('#installation-app');
+const boutonTelechargerApp = document.querySelector('#telecharger-app');
+const aideInstallationApp = document.querySelector('#aide-installation-app');
 const ecrans = [...document.querySelectorAll('.ecran')];
 const informationsListe = document.querySelector('#liste-informations');
 const rechercheInformations = document.querySelector('#recherche-informations');
@@ -27,6 +29,7 @@ let debutSemaineRendezVous = lundiCourant();
 let debutSemainePlanning = lundiCourant();
 let specialiteSuggeree = '';
 let minuteurAnnonce = null;
+let evenementInstallationDiffere = null;
 
 async function api(chemin, options = {}) {
   const reponse = await fetch(chemin, {
@@ -86,12 +89,49 @@ function afficherAnnonce(message) {
   }, 6000);
 }
 
-function afficherInvitationInstallationIos() {
+function estApplicationAutonome() {
+  return navigator.standalone === true
+    || window.matchMedia('(display-mode: standalone)').matches;
+}
+
+function afficherBoutonInstallation() {
+  invitationInstallationApp.hidden = estApplicationAutonome();
+}
+
+function afficherEtapesInstallationManuelle() {
   const estIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent)
     || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-  const estInstallee = navigator.standalone === true
-    || window.matchMedia('(display-mode: standalone)').matches;
-  invitationInstallationIos.hidden = !estIOS || estInstallee;
+  const estAndroid = /Android/i.test(navigator.userAgent);
+  if (estIOS) {
+    aideInstallationApp.textContent = 'Sur iPhone ou iPad : dans Safari, touchez Partager, puis « Sur l’écran d’accueil » et « Ajouter ». Activez « Ouvrir comme app web » si cette option apparaît.';
+  } else if (estAndroid) {
+    aideInstallationApp.textContent = 'Dans Chrome sur Android : ouvrez le menu ⋮, puis choisissez « Installer l’application » ou « Ajouter à l’écran d’accueil ». ';
+  } else {
+    aideInstallationApp.textContent = 'Dans le menu de votre navigateur, choisissez « Installer l’application » ou « Ajouter à l’écran d’accueil ». Dans Safari sur Mac, utilisez Fichier > Ajouter au Dock.';
+  }
+  aideInstallationApp.hidden = false;
+}
+
+async function installerApplication() {
+  if (!evenementInstallationDiffere) {
+    afficherEtapesInstallationManuelle();
+    return;
+  }
+
+  const evenement = evenementInstallationDiffere;
+  evenementInstallationDiffere = null;
+  try {
+    await evenement.prompt();
+    const choix = await evenement.userChoice;
+    if (choix.outcome === 'accepted') {
+      aideInstallationApp.textContent = 'Installation lancée. Vous retrouverez Sutura Santé sur votre appareil.';
+      aideInstallationApp.hidden = false;
+    } else {
+      afficherEtapesInstallationManuelle();
+    }
+  } catch {
+    afficherEtapesInstallationManuelle();
+  }
 }
 
 function dateUtc(date) {
@@ -492,7 +532,26 @@ document.querySelector('#planning-suivant').addEventListener('click', () => {
   void chargerPlanningMedecin();
 });
 window.addEventListener('hashchange', afficherEcran);
-afficherInvitationInstallationIos();
+afficherBoutonInstallation();
+
+const mediaAutonome = window.matchMedia('(display-mode: standalone)');
+if (mediaAutonome.addEventListener) {
+  mediaAutonome.addEventListener('change', afficherBoutonInstallation);
+} else {
+  mediaAutonome.addListener(afficherBoutonInstallation);
+}
+
+window.addEventListener('beforeinstallprompt', (event) => {
+  event.preventDefault();
+  evenementInstallationDiffere = event;
+});
+
+window.addEventListener('appinstalled', () => {
+  evenementInstallationDiffere = null;
+  invitationInstallationApp.hidden = true;
+});
+
+boutonTelechargerApp.addEventListener('click', () => void installerApplication());
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/sw.js').catch(() => {});

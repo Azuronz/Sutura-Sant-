@@ -1,6 +1,6 @@
 'use strict';
 
-const CACHE_VERSION = 'sutura-shell-v2';
+const CACHE_VERSION = 'sutura-shell-v3';
 const COQUILLE = [
   '/',
   '/index.html',
