@@ -1,0 +1,22 @@
+{
+  "name": "sutura-sante",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Serveur et authentification de Sutura Santé",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js",
+    "creer-admin": "node server/creer-admin.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "dotenv": "^16.4.7",
+    "express": "^5.1.0",
+    "helmet": "^8.1.0"
+  }
+}

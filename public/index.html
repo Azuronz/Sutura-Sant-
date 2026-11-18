@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#E8F4FC">
+    <title>Sutura Santé</title>
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" href="/icons/icon-192.png" type="image/png">
+    <link rel="stylesheet" href="/styles.css">
+    <script type="module" src="/app.js"></script>
+  </head>
+  <body>
+    <p class="bandeau-urgence" role="note">Urgence : 1515 (SAMU) ou 18 (pompiers)</p>
+
+    <header class="entete">
+      <a class="identite" href="#accueil" aria-label="Sutura Santé, accueil">
+        <span class="identite__marque" aria-hidden="true">S+</span>
+        <span class="identite__nom"><strong>Sutura</strong><span>Santé</span></span>
+      </a>
+      <span class="entete__repere">Santé au Sénégal</span>
+    </header>
+
+    <div class="app">
+      <p class="bandeau-statut" role="note">Démo : utilisez uniquement des données fictives. Les données de compte et de rendez-vous sont transmises au serveur.</p>
+      <main>
+        <section id="accueil" class="ecran" aria-labelledby="titre-accueil">
+          <div class="hero">
+            <div class="hero__contenu">
+              <span class="hero__surtitre">Votre santé, vos repères</span>
+              <h1 id="titre-accueil" class="hero__titre">Bienvenue sur <span>Sutura Santé</span></h1>
+              <p class="hero__texte">Des informations de santé, des ressources de bien-être et une orientation vers les soins au Sénégal.</p>
+              <div class="hero__actions">
+                <a class="btn btn--primaire" href="#rendez-vous"><span aria-hidden="true">▦</span> Prendre rendez-vous</a>
+                <a class="btn btn--secondaire" href="#informations">Découvrir les informations <span aria-hidden="true">→</span></a>
+              </div>
+            </div>
+            <div class="hero__illustration" aria-hidden="true">
+              <span class="hero__halo"></span>
+              <span class="hero__croix">✚</span>
+              <span class="hero__coeur">♡</span>
+            </div>
+          </div>
+
+          <section class="avantages" aria-label="Repères de l’application">
+            <article class="avantage">
+              <span class="avantage__icone" aria-hidden="true">✚</span>
+              <h2 class="avantage__titre">Informations santé</h2>
+              <p>Des fiches à consulter à votre rythme.</p>
+            </article>
+            <article class="avantage">
+              <span class="avantage__icone" aria-hidden="true">♡</span>
+              <h2 class="avantage__titre">Bien-être</h2>
+              <p>Des ressources et une orientation psychologique.</p>
+            </article>
+            <article class="avantage">
+              <span class="avantage__icone" aria-hidden="true">↗</span>
+              <h2 class="avantage__titre">Orientation</h2>
+              <p>Repérez le professionnel adapté à votre besoin.</p>
+            </article>
+            <article class="avantage">
+              <span class="avantage__icone" aria-hidden="true">☎</span>
+              <h2 class="avantage__titre">Urgences</h2>
+              <p>Les numéros essentiels restent visibles.</p>
+            </article>
+          </section>
+
+          <section class="services" aria-labelledby="titre-services">
+            <div class="section-entete">
+              <span class="section-entete__surtitre">Sutura Santé</span>
+              <h2 id="titre-services" class="section-entete__titre">Nos services</h2>
+              <p>Choisissez le service qui vous convient.</p>
+            </div>
+            <div class="services__grille">
+              <article class="service card">
+                <span class="service__icone" aria-hidden="true">✚</span>
+                <h3>Informations santé</h3>
+                <p>Parcourez les fiches et leurs repères de consultation.</p>
+                <a class="service__lien" href="#informations">Voir les fiches <span aria-hidden="true">→</span></a>
+              </article>
+              <article class="service card">
+                <span class="service__icone" aria-hidden="true">▦</span>
+                <h3>Rendez-vous</h3>
+                <p>Consultez les créneaux proposés par les médecins inscrits.</p>
+                <a class="service__lien" href="#rendez-vous">Choisir un créneau <span aria-hidden="true">→</span></a>
+              </article>
+              <article class="service card">
+                <span class="service__icone" aria-hidden="true">♡</span>
+                <h3>Bien-être psychologique</h3>
+                <p>Explorez les ressources et l’orientation disponibles.</p>
+                <a class="service__lien" href="#informations">Découvrir les ressources <span aria-hidden="true">→</span></a>
+              </article>
+            </div>
+          </section>
+
+          <article class="card card--urgence urgence-carte">
+            <span class="urgence-carte__icone" aria-hidden="true">!</span>
+            <div>
+              <h2>En cas d’urgence</h2>
+              <p>Appelez le SAMU au 1515 ou les pompiers au 18.</p>
+            </div>
+          </article>
+
+          <section id="session" class="session" aria-live="polite" hidden>
+            <p id="bonjour" class="session__bonjour"></p>
+            <button id="deconnexion" class="btn btn--secondaire" type="button">Déconnexion</button>
+          </section>
+        </section>
+
+        <section id="informations" class="ecran" aria-labelledby="titre-informations" hidden>
+          <div class="page-entete">
+            <span class="page-entete__surtitre">S’informer</span>
+            <h1 id="titre-informations">Informations santé</h1>
+            <p>Des repères généraux à lire et à partager avec un professionnel.</p>
+          </div>
+          <p class="bandeau-statut">Contenu en cours de validation par un professionnel de santé. Il ne remplace pas un avis médical. En cas d'urgence, appelez le 1515 ou le 18.</p>
+          <label class="recherche field">
+            <span class="field__label">Rechercher une information</span>
+            <input id="recherche-informations" class="input" type="search" autocomplete="off" placeholder="Ex. sommeil, stress">
+          </label>
+          <p id="etat-informations" class="chargement" role="status" aria-live="polite" hidden></p>
+          <ul id="liste-informations" class="liste fiches-liste"></ul>
+          <article id="detail-information" class="card detail-fiche" hidden>
+            <p class="bandeau-statut">Contenu en cours de validation par un professionnel de santé. Il ne remplace pas un avis médical. En cas d'urgence, appelez le 1515 ou le 18.</p>
+            <span id="detail-categorie" class="badge badge--medical"></span>
+            <h2 id="detail-titre"></h2>
+            <p id="detail-resume"></p>
+            <section>
+              <h3>Signes d’alerte</h3>
+              <div class="card card--urgence">
+                <ul id="detail-alertes"></ul>
+                <p>En cas d'urgence, appelez le SAMU au 1515 ou les pompiers au 18.</p>
+              </div>
+            </section>
+            <section>
+              <h3>Que faire en attendant</h3>
+              <ul id="detail-actions"></ul>
+            </section>
+            <p><strong>Quand consulter :</strong> <span id="detail-consulter"></span></p>
+            <p><span class="badge badge--bienetre">Professionnel conseillé</span> <span id="detail-specialite"></span></p>
+            <button id="consulter-medecin" class="btn btn--primaire" type="button">Consulter un médecin</button>
+          </article>
+        </section>
+
+        <section id="connexion" class="ecran" aria-labelledby="titre-connexion" hidden>
+          <div class="page-entete">
+            <span class="page-entete__surtitre">Votre espace</span>
+            <h1 id="titre-connexion">Connexion et inscription</h1>
+            <p>Créez un compte patient ou connectez-vous à votre espace.</p>
+          </div>
+          <section id="formulaires" class="card formulaires">
+            <h2>Créer un compte patient</h2>
+            <form id="inscription">
+              <label class="field"><span class="field__label">Prénom</span><input class="input" name="prenom" autocomplete="given-name" maxlength="100" required></label>
+              <label class="field"><span class="field__label">Nom</span><input class="input" name="nom" autocomplete="family-name" maxlength="100" required></label>
+              <label class="field"><span class="field__label">Adresse courriel</span><input class="input" name="email" type="email" autocomplete="email"></label>
+              <label class="field"><span class="field__label">Téléphone</span><input class="input" name="telephone" type="tel" autocomplete="tel"></label>
+              <p class="field__aide">Indiquez une adresse courriel ou un téléphone.</p>
+              <label class="field"><span class="field__label">Date de naissance</span><input class="input" name="date_naissance" type="date" autocomplete="bday" required></label>
+              <label class="field"><span class="field__label">Mot de passe</span><input class="input" name="mot_de_passe" type="password" autocomplete="new-password" minlength="8" maxlength="72" required></label>
+              <button class="btn btn--primaire" type="submit">Créer mon compte</button>
+            </form>
+            <p id="message-inscription" class="field__aide" role="status" aria-live="polite"></p>
+
+            <div class="formulaires__separateur" aria-hidden="true"><span>ou</span></div>
+
+            <h2>Se connecter</h2>
+            <form id="form-connexion">
+              <label class="field"><span class="field__label">Courriel, téléphone ou matricule</span><input class="input" name="identifiant" autocomplete="username" required></label>
+              <label class="field"><span class="field__label">Mot de passe</span><input class="input" name="mot_de_passe" type="password" autocomplete="current-password" minlength="8" maxlength="72" required></label>
+              <label class="field field--case"><input name="rester_connecte" type="checkbox"> <span>Rester connecté</span></label>
+              <button class="btn btn--primaire" type="submit">Se connecter</button>
+            </form>
+            <p id="message-connexion" class="field__aide" role="status" aria-live="polite"></p>
+          </section>
+        </section>
+
+        <section id="rendez-vous" class="ecran" aria-labelledby="titre-rendez-vous" hidden>
+          <div class="page-entete">
+            <span class="page-entete__surtitre">Planifier une consultation</span>
+            <h1 id="titre-rendez-vous">Prendre rendez-vous</h1>
+            <p>Choisissez un médecin et consultez les créneaux disponibles.</p>
+          </div>
+          <p id="acces-rendez-vous" class="etat-vide" role="status" aria-live="polite">Connectez-vous avec un compte patient pour gérer vos rendez-vous.</p>
+          <div id="outils-rendez-vous" class="rendez-vous-outils" hidden>
+            <label class="field"><span class="field__label">Filtrer par spécialité</span>
+              <select id="filtre-specialite" class="input">
+                <option value="">Toutes les spécialités</option>
+                <option value="médecin généraliste">Médecin généraliste</option>
+                <option value="psychologue">Psychologue</option>
+              </select>
+            </label>
+            <label class="field"><span class="field__label">Choisir un médecin</span><select id="choix-medecin" class="input"><option value="">Sélectionnez un médecin</option></select></label>
+            <p id="semaine-affichee" class="semaine-titre" aria-live="polite"></p>
+            <div class="semaine-actions">
+              <button id="semaine-precedente" class="btn btn--secondaire" type="button">Semaine précédente</button>
+              <button id="semaine-suivante" class="btn btn--secondaire" type="button">Semaine suivante</button>
+            </div>
+            <div id="liste-creneaux" class="slot" aria-live="polite"></div>
+            <div class="section-entete section-entete--gauche">
+              <span class="section-entete__surtitre">Votre suivi</span>
+              <h2>Mes rendez-vous</h2>
+            </div>
+            <button id="actualiser-rendez-vous" class="btn btn--secondaire" type="button">Actualiser mes rendez-vous</button>
+            <ul id="mes-rendez-vous" class="liste rendez-vous-liste"></ul>
+          </div>
+        </section>
+
+        <section id="planning-medecin" class="ecran" aria-labelledby="titre-planning" hidden>
+          <div class="page-entete">
+            <span class="page-entete__surtitre">Espace professionnel</span>
+            <h1 id="titre-planning">Planning médecin</h1>
+          </div>
+          <p id="acces-planning" class="etat-vide" role="status" aria-live="polite">Cet écran est réservé aux médecins connectés.</p>
+          <div id="contenu-planning" hidden>
+            <p id="semaine-planning" class="semaine-titre" aria-live="polite"></p>
+            <div class="semaine-actions">
+              <button id="planning-precedent" class="btn btn--secondaire" type="button">Semaine précédente</button>
+              <button id="planning-suivant" class="btn btn--secondaire" type="button">Semaine suivante</button>
+            </div>
+            <ul id="rendez-vous-medecin" class="liste rendez-vous-liste"></ul>
+          </div>
+        </section>
+      </main>
+
+      <nav class="nav" aria-label="Navigation principale">
+        <a class="nav__item" href="#accueil"><span class="nav__icone" aria-hidden="true">⌂</span><span>Accueil</span></a>
+        <a class="nav__item" href="#informations"><span class="nav__icone" aria-hidden="true">✚</span><span>Infos</span></a>
+        <a class="nav__item" href="#rendez-vous"><span class="nav__icone" aria-hidden="true">▦</span><span>Rendez-vous</span></a>
+        <a class="nav__item" href="#connexion"><span class="nav__icone" aria-hidden="true">○</span><span>Connexion</span></a>
+        <a id="lien-planning" class="nav__item" href="#planning-medecin" hidden><span class="nav__icone" aria-hidden="true">▤</span><span>Planning</span></a>
+      </nav>
+    </div>
+    <p id="annonce" class="toast" role="status" aria-live="polite" hidden></p>
+  </body>
+</html>

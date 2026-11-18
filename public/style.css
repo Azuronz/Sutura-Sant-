@@ -1,0 +1,455 @@
+:root {
+  --color-primary: #007A55;
+  --color-primary-hover: #006243;
+  --color-accent: #00838F;
+  --color-title: #0F172A;
+  --color-bg: #F0FDFA;
+  --color-card: #FFFFFF;
+  --color-success: #16A34A;
+  --color-danger: #DC2626;
+  --color-danger-bg: #FEF2F2;
+  --color-text: #334155;
+  --color-text-muted: #64748B;
+  --color-border: #CBD5E1;
+  --color-focus: #0284C7;
+  --color-white: #FFFFFF;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-primary: #10B981;
+    --color-primary-hover: #059669;
+    --color-accent: #22D3EE;
+    --color-title: #F8FAFC;
+    --color-bg: #042F2E;
+    --color-card: #0F4C4A;
+    --color-success: #22C55E;
+    --color-danger: #EF4444;
+    --color-danger-bg: #450A0A;
+    --color-text: #E2E8F0;
+    --color-text-muted: #94A3B8;
+    --color-border: #134E4A;
+    --color-focus: #38BDF8;
+    --color-white: #0F4C4A;
+  }
+}
+
+:root[data-theme="dark"] {
+  --color-primary: #10B981;
+  --color-primary-hover: #059669;
+  --color-accent: #22D3EE;
+  --color-title: #F8FAFC;
+  --color-bg: #042F2E;
+  --color-card: #0F4C4A;
+  --color-success: #22C55E;
+  --color-danger: #EF4444;
+  --color-danger-bg: #450A0A;
+  --color-text: #E2E8F0;
+  --color-text-muted: #94A3B8;
+  --color-border: #134E4A;
+  --color-focus: #38BDF8;
+  --color-white: #0F4C4A;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+.app {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  position: relative;
+  background-color: var(--color-bg);
+  padding-bottom: 90px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--color-title);
+  margin-top: 0;
+}
+
+/* Bandeau d'urgence fixe */
+.bandeau-urgence {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: var(--color-danger);
+  color: var(--color-white);
+  padding: 12px 16px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Boutons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  text-decoration: none;
+  transition: background-color 0.2s ease, transform 0.12s ease, border-color 0.2s ease;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn:focus-visible, input:focus-visible, .nav__item:focus-visible, .slot__item:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.btn--primaire {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+.btn--primaire:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.btn--secondaire {
+  background-color: transparent;
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+.btn--secondaire:hover {
+  background-color: var(--color-border);
+}
+
+.btn--danger {
+  background-color: var(--color-danger);
+  color: var(--color-white);
+}
+
+/* Cartes */
+.card {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.card--alerte {
+  border-color: var(--color-danger);
+  background-color: var(--color-danger-bg);
+}
+
+.card--urgence {
+  border-color: var(--color-danger);
+  background-color: var(--color-danger-bg);
+  border-width: 2px;
+}
+
+/* Navigation basse */
+.nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  background-color: var(--color-card);
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  justify-content: space-around;
+  padding: 8px 0;
+  z-index: 999;
+}
+
+.nav__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 44px;
+  flex: 1;
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.nav__item:hover, .nav__item--actif {
+  color: var(--color-primary);
+}
+
+.nav__item--actif {
+  font-weight: 700;
+}
+
+/* Champs */
+.field {
+  margin-bottom: 16px;
+  display: block;
+}
+
+.field__label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-title);
+  margin-bottom: 6px;
+}
+
+.input {
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 14px;
+  font-size: 1rem;
+  font-family: inherit;
+  background-color: var(--color-card);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  transition: border-color 0.2s ease;
+}
+
+.input--erreur {
+  border-color: var(--color-danger);
+}
+
+.field__aide {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  margin-top: 4px;
+}
+
+/* Pastilles */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background-color: var(--color-border);
+  color: var(--color-text);
+}
+
+.badge--medical {
+  background-color: var(--color-bg);
+  color: var(--color-accent);
+  border: 1px solid var(--color-accent);
+}
+
+.badge--bienetre {
+  background-color: #DCFCE7;
+  color: var(--color-success);
+}
+
+/* Créneaux */
+.slot {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+@media (max-width: 360px) {
+  .slot {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.slot__item {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-card);
+  color: var(--color-text);
+  transition: background-color 0.2s ease, transform 0.12s ease;
+}
+
+.slot__item:active {
+  transform: scale(0.97);
+}
+
+.slot--libre {
+  background-color: var(--color-card);
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.slot--pris {
+  background-color: var(--color-border);
+  color: var(--color-text-muted);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.slot--choisi {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  border-color: var(--color-primary);
+}
+
+/* Liste et recherche */
+.liste {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.recherche {
+  margin-bottom: 16px;
+}
+
+/* Bandeau de statut */
+.bandeau-statut {
+  padding: 10px 16px;
+  border-radius: 10px;
+  background-color: var(--color-border);
+  color: var(--color-title);
+  font-weight: 600;
+  font-size: 0.875rem;
+  margin-bottom: 12px;
+}
+
+/* États */
+.etat-vide {
+  text-align: center;
+  padding: 32px 16px;
+  color: var(--color-text-muted);
+  font-size: 0.938rem;
+}
+
+.chargement {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border: 3px solid var(--color-border);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.toast {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--color-title);
+  color: var(--color-white);
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 0.875rem;
+  z-index: 1001;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  animation: toastIn 250ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 20px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+/* Écrans et animations */
+.ecran {
+  padding: 16px;
+}
+
+.ecran:not([hidden]) {
+  animation: ecranIn 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes ecranIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Cascade animations pour les créneaux (limités aux 12 premiers) */
+.slot__item:nth-child(1) { animation: cascadeIn 0.3s ease 0ms both; }
+.slot__item:nth-child(2) { animation: cascadeIn 0.3s ease 30ms both; }
+.slot__item:nth-child(3) { animation: cascadeIn 0.3s ease 60ms both; }
+.slot__item:nth-child(4) { animation: cascadeIn 0.3s ease 90ms both; }
+.slot__item:nth-child(5) { animation: cascadeIn 0.3s ease 120ms both; }
+.slot__item:nth-child(6) { animation: cascadeIn 0.3s ease 150ms both; }
+.slot__item:nth-child(7) { animation: cascadeIn 0.3s ease 180ms both; }
+.slot__item:nth-child(8) { animation: cascadeIn 0.3s ease 210ms both; }
+.slot__item:nth-child(9) { animation: cascadeIn 0.3s ease 240ms both; }
+.slot__item:nth-child(10) { animation: cascadeIn 0.3s ease 270ms both; }
+.slot__item:nth-child(11) { animation: cascadeIn 0.3s ease 300ms both; }
+.slot__item:nth-child(12) { animation: cascadeIn 0.3s ease 330ms both; }
+
+@keyframes cascadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Cascade animations pour les cartes de la liste (limitées aux 8 premières) */
+.liste .card:nth-child(1) { animation: cascadeIn 0.3s ease 0ms both; }
+.liste .card:nth-child(2) { animation: cascadeIn 0.3s ease 40ms both; }
+.liste .card:nth-child(3) { animation: cascadeIn 0.3s ease 80ms both; }
+.liste .card:nth-child(4) { animation: cascadeIn 0.3s ease 120ms both; }
+.liste .card:nth-child(5) { animation: cascadeIn 0.3s ease 160ms both; }
+.liste .card:nth-child(6) { animation: cascadeIn 0.3s ease 200ms both; }
+.liste .card:nth-child(7) { animation: cascadeIn 0.3s ease 240ms both; }
+.liste .card:nth-child(8) { animation: cascadeIn 0.3s ease 280ms both; }
+
+/* Prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

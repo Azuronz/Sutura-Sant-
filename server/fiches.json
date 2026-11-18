@@ -1,0 +1,107 @@
+[
+  {
+    "slug": "douleur-thoracique",
+    "titre": "Douleur ou gêne dans la poitrine",
+    "categorie": "Santé physique",
+    "resume": "Une douleur ou une gêne dans la poitrine mérite une attention adaptée. Cette fiche donne des repères généraux et ne permet pas d'établir une cause.",
+    "signes_alerte": [
+      "Douleur intense, soudaine ou persistante dans la poitrine.",
+      "Difficulté à respirer, malaise ou perte de connaissance.",
+      "Douleur qui s'accompagne d'une grande faiblesse ou d'une confusion."
+    ],
+    "quoi_faire": [
+      "Arrêtez l'effort et mettez-vous au repos dans une position confortable.",
+      "Demandez de l'aide à une personne proche.",
+      "En cas de signe d'urgence, appelez le SAMU au 1515 ou les pompiers au 18."
+    ],
+    "quand_consulter": "Consultez rapidement un professionnel de santé pour toute douleur nouvelle, persistante ou qui vous inquiète. En cas de signe d'urgence, appelez le 1515 ou le 18.",
+    "specialite": "médecin généraliste",
+    "statut_validation": "brouillon",
+    "validee_par": null,
+    "date_validation": null
+  },
+  {
+    "slug": "difficulte-respiratoire",
+    "titre": "Difficulté à respirer",
+    "categorie": "Santé physique",
+    "resume": "Une respiration difficile ou inhabituelle peut nécessiter une aide rapide. Cette fiche ne remplace pas une évaluation médicale.",
+    "signes_alerte": [
+      "Difficulté importante ou soudaine à respirer.",
+      "Lèvres bleutées, malaise, confusion ou perte de connaissance.",
+      "Aggravation rapide de la gêne respiratoire."
+    ],
+    "quoi_faire": [
+      "Arrêtez l'activité et installez-vous dans une position confortable.",
+      "Restez avec une personne de confiance si possible.",
+      "En cas d'urgence, appelez le SAMU au 1515 ou les pompiers au 18."
+    ],
+    "quand_consulter": "Demandez rapidement un avis médical si la difficulté est nouvelle, persiste ou s'aggrave. En cas d'urgence, appelez le 1515 ou le 18.",
+    "specialite": "médecin généraliste",
+    "statut_validation": "brouillon",
+    "validee_par": null,
+    "date_validation": null
+  },
+  {
+    "slug": "stress-et-anxiete",
+    "titre": "Stress et anxiété",
+    "categorie": "Bien-être",
+    "resume": "Le stress et l'anxiété peuvent affecter le quotidien. En parler avec une personne de confiance ou un professionnel peut aider.",
+    "signes_alerte": [
+      "Une souffrance qui devient difficile à gérer au quotidien.",
+      "Un isolement important ou une perte durable d'intérêt pour les activités habituelles.",
+      "Le sentiment d'être en danger ou des pensées de se faire du mal."
+    ],
+    "quoi_faire": [
+      "Parlez de votre situation à une personne de confiance.",
+      "Essayez de vous installer dans un endroit calme et de respirer lentement, sans forcer.",
+      "Si vous êtes en danger immédiat, appelez le SAMU au 1515 ou les pompiers au 18."
+    ],
+    "quand_consulter": "Prenez contact avec un professionnel si la souffrance persiste, s'intensifie ou perturbe votre vie. En cas de danger immédiat, appelez le 1515 ou le 18.",
+    "specialite": "psychologue",
+    "statut_validation": "brouillon",
+    "validee_par": null,
+    "date_validation": null
+  },
+  {
+    "slug": "sommeil",
+    "titre": "Sommeil et repos",
+    "categorie": "Bien-être",
+    "resume": "Un sommeil perturbé peut avoir plusieurs causes. Des habitudes régulières peuvent favoriser le repos, sans remplacer un avis professionnel.",
+    "signes_alerte": [
+      "Des difficultés de sommeil qui persistent et affectent la journée.",
+      "Une fatigue importante qui gêne les activités habituelles.",
+      "Une souffrance émotionnelle importante liée au sommeil."
+    ],
+    "quoi_faire": [
+      "Essayez de garder des horaires de repos réguliers.",
+      "Prévoyez un moment calme avant de vous coucher si cela vous convient.",
+      "Parlez-en à un professionnel si les difficultés persistent."
+    ],
+    "quand_consulter": "Consultez un professionnel si les troubles durent, s'aggravent ou ont un impact marqué sur votre quotidien.",
+    "specialite": "médecin généraliste",
+    "statut_validation": "brouillon",
+    "validee_par": null,
+    "date_validation": null
+  },
+  {
+    "slug": "mal-de-tete",
+    "titre": "Mal de tête",
+    "categorie": "Santé physique",
+    "resume": "Un mal de tête peut avoir différentes causes. Cette fiche propose des repères généraux, sans poser de diagnostic ni conseiller de médicament.",
+    "signes_alerte": [
+      "Un mal de tête très intense et soudain.",
+      "Un mal de tête accompagné de confusion, faiblesse inhabituelle ou perte de connaissance.",
+      "Une aggravation rapide ou une situation qui vous inquiète fortement."
+    ],
+    "quoi_faire": [
+      "Mettez-vous au repos dans un endroit calme si possible.",
+      "Demandez conseil à un professionnel de santé avant toute prise de médicament.",
+      "En cas d'urgence, appelez le SAMU au 1515 ou les pompiers au 18."
+    ],
+    "quand_consulter": "Consultez un professionnel si le mal de tête persiste, revient souvent ou vous inquiète. En cas de signe d'urgence, appelez le 1515 ou le 18.",
+    "specialite": "médecin généraliste",
+    "statut_validation": "brouillon",
+    "validee_par": null,
+    "date_validation": null
+  }
+]

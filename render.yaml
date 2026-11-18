@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: sutura-sante
+    runtime: node
+    # Offre gratuite pour la démonstration; le disque local est éphémère.
+    plan: free
+    region: frankfurt
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /
+    envVars:
+      - key: NODE_VERSION
+        value: 24.22.1
+      - key: NODE_ENV
+        value: production
+      - key: DB_PATH
+        value: ./data/sutura-demo.sqlite
+      - key: SESSION_COOKIE_NAME
+        value: sutura_session
+      - key: TRUST_PROXY
+        value: '1'
