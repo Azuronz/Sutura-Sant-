@@ -227,6 +227,60 @@
               <button id="planning-precedent" class="btn btn--secondaire" type="button">Semaine précédente</button>
               <button id="planning-suivant" class="btn btn--secondaire" type="button">Semaine suivante</button>
             </div>
+            <p id="semaine-planning-passee" class="etat-vide" hidden>Cette semaine est passée</p>
+            <div id="conflits-disponibilites" class="card card--alerte" role="alert" hidden></div>
+            <form id="form-disponibilites">
+              <section class="card" data-decalage="0">
+                <h3>Lundi <span class="field__aide" data-date-disponibilite></span></h3>
+                <label class="field field--case" for="dispo-lun-ouvert"><input id="dispo-lun-ouvert" type="checkbox"><span>Ouvert</span></label>
+                <label class="field" for="dispo-lun-debut"><span class="field__label">Heure de début</span><input id="dispo-lun-debut" class="input" type="time" step="60"></label>
+                <label class="field" for="dispo-lun-fin"><span class="field__label">Heure de fin</span><input id="dispo-lun-fin" class="input" type="time" step="60"></label>
+                <label class="field" for="dispo-lun-duree"><span class="field__label">Durée du créneau</span><select id="dispo-lun-duree" class="input"><option value="15">15 minutes</option><option value="20">20 minutes</option><option value="30" selected>30 minutes</option><option value="45">45 minutes</option><option value="60">60 minutes</option></select></label>
+              </section>
+              <section class="card" data-decalage="1">
+                <h3>Mardi <span class="field__aide" data-date-disponibilite></span></h3>
+                <label class="field field--case" for="dispo-mar-ouvert"><input id="dispo-mar-ouvert" type="checkbox"><span>Ouvert</span></label>
+                <label class="field" for="dispo-mar-debut"><span class="field__label">Heure de début</span><input id="dispo-mar-debut" class="input" type="time" step="60"></label>
+                <label class="field" for="dispo-mar-fin"><span class="field__label">Heure de fin</span><input id="dispo-mar-fin" class="input" type="time" step="60"></label>
+                <label class="field" for="dispo-mar-duree"><span class="field__label">Durée du créneau</span><select id="dispo-mar-duree" class="input"><option value="15">15 minutes</option><option value="20">20 minutes</option><option value="30" selected>30 minutes</option><option value="45">45 minutes</option><option value="60">60 minutes</option></select></label>
+              </section>
+              <section class="card" data-decalage="2">
+                <h3>Mercredi <span class="field__aide" data-date-disponibilite></span></h3>
+                <label class="field field--case" for="dispo-mer-ouvert"><input id="dispo-mer-ouvert" type="checkbox"><span>Ouvert</span></label>
+                <label class="field" for="dispo-mer-debut"><span class="field__label">Heure de début</span><input id="dispo-mer-debut" class="input" type="time" step="60"></label>
+                <label class="field" for="dispo-mer-fin"><span class="field__label">Heure de fin</span><input id="dispo-mer-fin" class="input" type="time" step="60"></label>
+                <label class="field" for="dispo-mer-duree"><span class="field__label">Durée du créneau</span><select id="dispo-mer-duree" class="input"><option value="15">15 minutes</option><option value="20">20 minutes</option><option value="30" selected>30 minutes</option><option value="45">45 minutes</option><option value="60">60 minutes</option></select></label>
+              </section>
+              <section class="card" data-decalage="3">
+                <h3>Jeudi <span class="field__aide" data-date-disponibilite></span></h3>
+                <label class="field field--case" for="dispo-jeu-ouvert"><input id="dispo-jeu-ouvert" type="checkbox"><span>Ouvert</span></label>
+                <label class="field" for="dispo-jeu-debut"><span class="field__label">Heure de début</span><input id="dispo-jeu-debut" class="input" type="time" step="60"></label>
+                <label class="field" for="dispo-jeu-fin"><span class="field__label">Heure de fin</span><input id="dispo-jeu-fin" class="input" type="time" step="60"></label>
+                <label class="field" for="dispo-jeu-duree"><span class="field__label">Durée du créneau</span><select id="dispo-jeu-duree" class="input"><option value="15">15 minutes</option><option value="20">20 minutes</option><option value="30" selected>30 minutes</option><option value="45">45 minutes</option><option value="60">60 minutes</option></select></label>
+              </section>
+              <section class="card" data-decalage="4">
+                <h3>Vendredi <span class="field__aide" data-date-disponibilite></span></h3>
+                <label class="field field--case" for="dispo-ven-ouvert"><input id="dispo-ven-ouvert" type="checkbox"><span>Ouvert</span></label>
+                <label class="field" for="dispo-ven-debut"><span class="field__label">Heure de début</span><input id="dispo-ven-debut" class="input" type="time" step="60"></label>
+                <label class="field" for="dispo-ven-fin"><span class="field__label">Heure de fin</span><input id="dispo-ven-fin" class="input" type="time" step="60"></label>
+                <label class="field" for="dispo-ven-duree"><span class="field__label">Durée du créneau</span><select id="dispo-ven-duree" class="input"><option value="15">15 minutes</option><option value="20">20 minutes</option><option value="30" selected>30 minutes</option><option value="45">45 minutes</option><option value="60">60 minutes</option></select></label>
+              </section>
+              <section class="card" data-decalage="5">
+                <h3>Samedi <span class="field__aide" data-date-disponibilite></span></h3>
+                <label class="field field--case" for="dispo-sam-ouvert"><input id="dispo-sam-ouvert" type="checkbox"><span>Ouvert</span></label>
+                <label class="field" for="dispo-sam-debut"><span class="field__label">Heure de début</span><input id="dispo-sam-debut" class="input" type="time" step="60"></label>
+                <label class="field" for="dispo-sam-fin"><span class="field__label">Heure de fin</span><input id="dispo-sam-fin" class="input" type="time" step="60"></label>
+                <label class="field" for="dispo-sam-duree"><span class="field__label">Durée du créneau</span><select id="dispo-sam-duree" class="input"><option value="15">15 minutes</option><option value="20">20 minutes</option><option value="30" selected>30 minutes</option><option value="45">45 minutes</option><option value="60">60 minutes</option></select></label>
+              </section>
+              <section class="card" data-decalage="6">
+                <h3>Dimanche <span class="field__aide" data-date-disponibilite></span></h3>
+                <label class="field field--case" for="dispo-dim-ouvert"><input id="dispo-dim-ouvert" type="checkbox"><span>Ouvert</span></label>
+                <label class="field" for="dispo-dim-debut"><span class="field__label">Heure de début</span><input id="dispo-dim-debut" class="input" type="time" step="60"></label>
+                <label class="field" for="dispo-dim-fin"><span class="field__label">Heure de fin</span><input id="dispo-dim-fin" class="input" type="time" step="60"></label>
+                <label class="field" for="dispo-dim-duree"><span class="field__label">Durée du créneau</span><select id="dispo-dim-duree" class="input"><option value="15">15 minutes</option><option value="20">20 minutes</option><option value="30" selected>30 minutes</option><option value="45">45 minutes</option><option value="60">60 minutes</option></select></label>
+              </section>
+              <button class="btn btn--primaire" type="submit">Enregistrer les disponibilités</button>
+            </form>
             <ul id="rendez-vous-medecin" class="liste rendez-vous-liste"></ul>
           </div>
         </section>

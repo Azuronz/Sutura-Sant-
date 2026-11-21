@@ -17,6 +17,9 @@ const choixMedecin = document.querySelector('#choix-medecin');
 const listeCreneaux = document.querySelector('#liste-creneaux');
 const mesRendezVous = document.querySelector('#mes-rendez-vous');
 const listeRendezVousMedecin = document.querySelector('#rendez-vous-medecin');
+const formulaireDisponibilites = document.querySelector('#form-disponibilites');
+const semainePlanningPassee = document.querySelector('#semaine-planning-passee');
+const conflitsDisponibilites = document.querySelector('#conflits-disponibilites');
 const indicateurChargementInformations = creerElement('div', '', 'chargement');
 indicateurChargementInformations.hidden = true;
 etatInformations.classList.remove('chargement');
@@ -30,6 +33,7 @@ let debutSemainePlanning = lundiCourant();
 let specialiteSuggeree = '';
 let minuteurAnnonce = null;
 let evenementInstallationDiffere = null;
+let sequenceChargementPlanning = 0;
 
 async function api(chemin, options = {}) {
   const reponse = await fetch(chemin, {
@@ -41,7 +45,12 @@ async function api(chemin, options = {}) {
     }
   });
   const contenu = await reponse.json().catch(() => ({}));
-  if (!reponse.ok) throw new Error(contenu.erreur || 'Une erreur est survenue.');
+  if (!reponse.ok) {
+    const erreur = new Error(contenu.erreur || 'Une erreur est survenue.');
+    erreur.status = reponse.status;
+    erreur.donnees = contenu;
+    throw erreur;
+  }
   return contenu;
 }
 
@@ -412,35 +421,88 @@ async function annulerRendezVous(id, bouton) {
   }
 }
 
+function remplirFormulaireDisponibilites(lundi, disponibilites, chargees) {
+  formulaireDisponibilites.reset();
+  const parDate = new Map(disponibilites.map((disponibilite) => [disponibilite.date, disponibilite]));
+  for (const jour of formulaireDisponibilites.querySelectorAll('[data-decalage]')) {
+    const date = ajouterJours(lundi, Number(jour.dataset.decalage));
+    jour.querySelector('[data-date-disponibilite]').textContent = `— ${date}`;
+    const disponibilite = parDate.get(date);
+    const [ouvert, debut, fin] = jour.querySelectorAll('input');
+    const duree = jour.querySelector('select');
+    ouvert.checked = Boolean(disponibilite);
+    debut.value = disponibilite?.heure_debut || '';
+    fin.value = disponibilite?.heure_fin || '';
+    duree.value = String(disponibilite?.duree_creneau || 30);
+  }
+
+  const estPasse = lundi < lundiCourant();
+  semainePlanningPassee.hidden = !estPasse;
+  formulaireDisponibilites.dataset.disponibilitesChargees = String(chargees);
+  for (const champ of formulaireDisponibilites.elements) champ.disabled = !chargees || estPasse;
+}
+
+function effacerConflitsDisponibilites() {
+  conflitsDisponibilites.replaceChildren();
+  conflitsDisponibilites.hidden = true;
+}
+
+function afficherConflitsDisponibilites(erreur) {
+  const rendezVous = erreur.donnees?.rendez_vous || [];
+  const liste = creerElement('ul');
+  for (const element of rendezVous) {
+    liste.append(creerElement('li', `${element.date} à ${element.heure}`));
+  }
+  conflitsDisponibilites.replaceChildren(creerElement('p', erreur.message), liste);
+  conflitsDisponibilites.hidden = false;
+}
+
 async function chargerPlanningMedecin() {
   if (utilisateur?.role !== 'medecin') return;
-  const periode = periodeSemaine(debutSemainePlanning);
-  document.querySelector('#semaine-planning').textContent = libelleSemaine(debutSemainePlanning);
+  const lundi = debutSemainePlanning;
+  const sequence = ++sequenceChargementPlanning;
+  const periode = periodeSemaine(lundi);
+  const query = new URLSearchParams(periode);
+  document.querySelector('#semaine-planning').textContent = libelleSemaine(lundi);
+  remplirFormulaireDisponibilites(lundi, [], false);
+  effacerConflitsDisponibilites();
   const ligneChargement = creerElement('li');
   ligneChargement.append(creerEtatChargement('Chargement du planning…'));
   listeRendezVousMedecin.replaceChildren(ligneChargement);
-  try {
-    const query = new URLSearchParams(periode);
-    const resultat = await api(`/api/medecin/rendez-vous?${query}`);
-    listeRendezVousMedecin.replaceChildren();
-    if (resultat.rendez_vous.length === 0) {
-      listeRendezVousMedecin.append(creerElement('li', 'Aucun rendez-vous cette semaine.', 'etat-vide'));
-      return;
-    }
-    for (const rendezVous of resultat.rendez_vous) {
-      const patient = rendezVous.patient;
-      const ligne = creerElement('li', '', 'card');
-      ligne.append(creerElement('p', `${rendezVous.date} à ${rendezVous.heure}`));
-      ligne.append(creerElement('p', `Patient : ${patient.prenom} ${patient.nom}`));
-      ligne.append(creerElement('p', `Statut : ${rendezVous.statut === 'confirme' ? 'confirmé' : 'annulé'}`));
-      listeRendezVousMedecin.append(ligne);
-    }
-  } catch (erreur) {
-    const message = creerElement('p', erreur.message, 'field__aide');
+
+  const [resultatRendezVous, resultatDisponibilites] = await Promise.allSettled([
+    api(`/api/medecin/rendez-vous?${query}`),
+    api(`/api/medecin/disponibilites?${query}`)
+  ]);
+  if (sequence !== sequenceChargementPlanning) return;
+
+  if (resultatDisponibilites.status === 'fulfilled') {
+    remplirFormulaireDisponibilites(lundi, resultatDisponibilites.value.disponibilites, true);
+  } else {
+    afficherAnnonce(resultatDisponibilites.reason.message);
+  }
+
+  if (resultatRendezVous.status === 'rejected') {
+    const message = creerElement('p', resultatRendezVous.reason.message, 'field__aide');
     message.setAttribute('role', 'status');
     const ligneErreur = creerElement('li');
     ligneErreur.append(message);
     listeRendezVousMedecin.replaceChildren(ligneErreur);
+    return;
+  }
+
+  listeRendezVousMedecin.replaceChildren();
+  if (resultatRendezVous.value.rendez_vous.length === 0) {
+    listeRendezVousMedecin.append(creerElement('li', 'Aucun rendez-vous cette semaine.', 'etat-vide'));
+    return;
+  }
+  for (const rendezVous of resultatRendezVous.value.rendez_vous) {
+    const patient = rendezVous.patient;
+    const ligne = creerElement('li', '', 'card');
+    ligne.append(creerElement('p', `${rendezVous.date} à ${rendezVous.heure}`));
+    ligne.append(creerElement('p', `Patient : ${patient.prenom} ${patient.nom}`));
+    ligne.append(creerElement('p', `Statut : ${rendezVous.statut === 'confirme' ? 'confirmé' : 'annulé'}`));
+    listeRendezVousMedecin.append(ligne);
   }
 }
 
@@ -521,6 +583,57 @@ document.querySelector('#actualiser-rendez-vous').addEventListener('click', asyn
     await chargerMesRendezVous();
   } catch (erreur) {
     afficherAnnonce(erreur.message);
+  }
+});
+formulaireDisponibilites.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  if (utilisateur?.role !== 'medecin') return;
+  const lundi = debutSemainePlanning;
+  if (lundi < lundiCourant()) return;
+  if (formulaireDisponibilites.dataset.disponibilitesChargees !== 'true') {
+    afficherAnnonce('Les disponibilités ne sont pas encore chargées.');
+    return;
+  }
+
+  const plages = [];
+  for (const jour of formulaireDisponibilites.querySelectorAll('[data-decalage]')) {
+    const [ouvert, debut, fin] = jour.querySelectorAll('input');
+    if (!ouvert.checked) continue;
+    if (!debut.value || !fin.value || debut.value >= fin.value) {
+      afficherAnnonce('Pour chaque jour ouvert, l’heure de début doit être antérieure à l’heure de fin.');
+      return;
+    }
+    plages.push({
+      date: ajouterJours(lundi, Number(jour.dataset.decalage)),
+      heure_debut: debut.value,
+      heure_fin: fin.value,
+      duree_creneau: Number(jour.querySelector('select').value)
+    });
+  }
+
+  const boutonEnregistrer = formulaireDisponibilites.querySelector('[type="submit"]');
+  const boutonsSemaine = [
+    document.querySelector('#planning-precedent'),
+    document.querySelector('#planning-suivant')
+  ];
+  boutonEnregistrer.disabled = true;
+  for (const bouton of boutonsSemaine) bouton.disabled = true;
+  effacerConflitsDisponibilites();
+  try {
+    const resultat = await api(`/api/medecin/disponibilites/${lundi}`, {
+      method: 'PUT',
+      body: JSON.stringify(plages)
+    });
+    afficherAnnonce(resultat.message);
+    if (debutSemainePlanning === lundi) await chargerPlanningMedecin();
+  } catch (erreur) {
+    if (erreur.status === 409) afficherConflitsDisponibilites(erreur);
+    else afficherAnnonce(erreur.message);
+  } finally {
+    for (const bouton of boutonsSemaine) bouton.disabled = false;
+    if (formulaireDisponibilites.dataset.disponibilitesChargees === 'true') {
+      boutonEnregistrer.disabled = debutSemainePlanning < lundiCourant();
+    }
   }
 });
 document.querySelector('#planning-precedent').addEventListener('click', () => {
